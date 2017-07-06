@@ -8,3 +8,11 @@
       <title>Formulaire sql</title>
     </head>
     <body>
+      <nav>
+        <ul>
+          <li id="cli">Ajouter client</li>
+          <li id="spec">Ajouter spectacle</li>
+          <li id="listcli">Liste des clients</li>
+          <li id="listspec">Liste des spectacles</li>
+        <ul>
+      </nav>

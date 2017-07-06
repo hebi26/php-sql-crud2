@@ -1,26 +1,34 @@
 <?php include ('../php/conection.php');
 
-if(!$_POST['card']){
-$checkval= 0;
-}
-else{
-$checkval=1;
-}
-
-
+// ----------------------RECUPERATION DS VARIABLES----------------------------
+// variables clients
 $firstname= $_POST['nom'];
 $lastname= $_POST['prenom'];
 $birth= $_POST['birth'];
 $numcard=(int)$_POST['num'];
+// variables card
+$cardtype=$_POST['select'];
 
-if(!$_POST['num'] || $checkval== 0){
-$numcard= NULL;
+// ------------------------CONDITION & ENVOIE NUM CARTE------------------------
+
+if(!$_POST['card']){
+$checkval= 0;
+  $numcard= NULL;
 }
 else{
-$numcard=$_POST['num'];
+$checkval=1;
+  $numcard=$_POST['num'];
+
+  $req = $pdo->prepare("INSERT INTO cards (cardNumber, cardTypesId)
+  VALUES(:cardNumber, :cardTypesId)");
+
+  $req->execute(array(
+      'cardNumber' => $numcard,
+      'cardTypesId' => $cardtype
+    ));
 }
 
-var_dump($checkval, $numcard);
+// -----------------------AJOUT TABLE CLIENTS-------------------------------
 
 $req = $pdo->prepare("INSERT INTO clients (lastName, firstName, birthDate, card, cardNumber)
 VALUES(:lastName, :firstName, :birthDate, :card, :cardNumber)");
@@ -34,6 +42,7 @@ $req->execute(array(
   ));
 
 print_r($pdo->errorInfo());
+
 
 
 header('location: ../index.php');
